@@ -3,6 +3,7 @@ package com.flab.posttoy.repository.user;
 import com.flab.posttoy.domain.User;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,8 @@ public class UserMemoryRepository implements UserRepository {
     @Override
     public User save(User user) {
         user.setId(sequence.incrementAndGet());
+        user.setCreatedAt(createdTime());
+        user.setModifiedAt(user.getCreatedAt());
         store.put(user.getId(), user);
         return user;
     }
@@ -41,4 +44,6 @@ public class UserMemoryRepository implements UserRepository {
     public List<User> findAll() {
         return new ArrayList<>(store.values());
     }
+
+
 }

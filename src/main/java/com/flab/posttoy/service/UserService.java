@@ -24,9 +24,8 @@ public class UserService {
     /**
      * 회원가입
      */
-    public long signUp(User user){
-        userRepository.save(user);
-        return user.getId();
+    public User signUp(User user){
+        return userRepository.save(user);
     }
 
     /**
