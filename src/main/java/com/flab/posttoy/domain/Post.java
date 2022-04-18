@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @EqualsAndHashCode
 public class Post {
-    private Long id = 0L;
+    private Long id ;
     private String title;
     private String content;
     private Long userId;
