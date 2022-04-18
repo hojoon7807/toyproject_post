@@ -23,7 +23,6 @@ public class PostDTO {
         }
     }
 
-    @Builder
     @Getter
     public static class ResponsePost {
         private Long id;
@@ -32,6 +31,16 @@ public class PostDTO {
         private Long userId;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+
+        @Builder
+        private ResponsePost(Long id, String title, String content, Long userId, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+            this.id = id;
+            this.title = title;
+            this.content = content;
+            this.userId = userId;
+            this.createdAt = createdAt;
+            this.modifiedAt = modifiedAt;
+        }
 
         public static ResponsePost from(Post post){
             return ResponsePost.builder()
