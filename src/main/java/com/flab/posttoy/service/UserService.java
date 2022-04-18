@@ -2,14 +2,14 @@ package com.flab.posttoy.service;
 
 import com.flab.posttoy.domain.Post;
 import com.flab.posttoy.domain.User;
+import com.flab.posttoy.exception.DuplicatedUserException;
 import com.flab.posttoy.exception.NotFoundUserException;
 import com.flab.posttoy.repository.post.PostRepository;
-import com.flab.posttoy.repository.user.UserMemoryRepository;
 import com.flab.posttoy.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -25,6 +25,7 @@ public class UserService {
      * 회원가입
      */
     public User signUp(User user){
+        validDuplicatedUser(user);
         return userRepository.save(user);
     }
 
@@ -36,11 +37,10 @@ public class UserService {
         return user.getId();
     }
 
-    /**
-     * 본인 게시글 조회
-     */
-    public List<Post> getMyPostList(){
-        return new ArrayList<Post>();
+    private void validDuplicatedUser(User user){
+        userRepository.findByName(user.getUsername()).ifPresent(u->{
+            throw new DuplicatedUserException("이미 존재하는 회원입니다.");
+        });
     }
 
 }
