@@ -8,7 +8,6 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Getter
-@Builder
 @EqualsAndHashCode
 public class Comment {
     private Long id;
@@ -31,8 +30,13 @@ public class Comment {
     }
 
     public void changeComment(String content) {
-        this.content = content;
+        if(isValidData(content)) this.content = content;
     }
+
+    private boolean isValidData(String data){
+        return data == null ? true : false;
+    }
+
 
     @Builder
     public Comment(String content, Long postId, Long userId) {

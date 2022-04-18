@@ -7,10 +7,9 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-@Builder
 @EqualsAndHashCode
 public class Post {
-    private Long id;
+    private Long id = 0L;
     private String title;
     private String content;
     private Long userId;
@@ -30,8 +29,12 @@ public class Post {
     }
 
     public void changePost(String title, String content) {
-        this.title = title;
-        this.content = content;
+        if(isValidData(title)) this.title = title;
+        if(isValidData(content)) this.content = content;
+    }
+
+    private boolean isValidData(String data){
+        return data == null ? true : false;
     }
 
     @Builder
