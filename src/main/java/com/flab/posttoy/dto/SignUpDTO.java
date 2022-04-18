@@ -15,10 +15,19 @@ public class SignUpDTO {
     @NotNull
     private String password;
 
+    public SignUpDTO(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public User toEntity(){
         return User.builder()
                 .username(username)
                 .password(password)
                 .build();
+    }
+
+    public static SignUpDTO from(User user){
+        return new SignUpDTO(user.getUsername(), user.getPassword());
     }
 }
