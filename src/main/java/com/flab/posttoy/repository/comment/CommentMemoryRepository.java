@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 @Repository
 public class CommentMemoryRepository implements CommentRepository {
@@ -31,6 +32,13 @@ public class CommentMemoryRepository implements CommentRepository {
         comment.setModifiedAt(modifiedTime());
         store.put(comment.getId(), comment);
         return comment;
+    }
+
+    @Override
+    public List<Comment> findByPostId(Long id) {
+        return findAll().stream()
+                .filter(comment -> comment.getPostId().equals(id))
+                .collect(Collectors.toList());
     }
 
     @Override

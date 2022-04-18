@@ -15,6 +15,7 @@ public interface CommentRepository {
     Comment save(Comment comment);
     Optional<Comment> findById(Long id);
     Optional<List<Comment>> findByUserame(String username);
+    List<Comment> findByPostId(Long id);
     Comment update(Comment comment);
     void remove(Long id);
 

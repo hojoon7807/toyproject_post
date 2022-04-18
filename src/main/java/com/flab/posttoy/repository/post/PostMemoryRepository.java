@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 @Repository
 public class PostMemoryRepository implements PostRepository {
@@ -48,8 +49,10 @@ public class PostMemoryRepository implements PostRepository {
     }
 
     @Override
-    public Optional<List<Post>> findByUsername(String username) {
-        return Optional.empty();
+    public List<Post> findByUserId(Long id) {
+        return findAll().stream()
+                .filter(post -> post.getUserId().equals(id))
+                .collect(Collectors.toList());
     }
 
     @Override
