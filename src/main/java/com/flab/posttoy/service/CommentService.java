@@ -17,6 +17,7 @@ public class CommentService {
      * 댓글 추가
      */
     public Comment addComment(Comment comment) {
+        // post 존재 여부 검증이 필요한가??
         postRepository.findById(comment.getPostId()).orElseThrow(() -> new ResourceNotFoundException("post", "id", comment.getPostId()));
         return commentRepository.save(comment);
     }
