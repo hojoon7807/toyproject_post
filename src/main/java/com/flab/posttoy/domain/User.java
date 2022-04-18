@@ -2,11 +2,13 @@ package com.flab.posttoy.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
+@EqualsAndHashCode
 public class User {
     private Long id;
     private String username;
@@ -29,10 +31,8 @@ public class User {
     }
 
     @Builder
-    public User(String username, String password, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
     }
 }

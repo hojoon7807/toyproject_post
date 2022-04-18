@@ -1,12 +1,14 @@
 package com.flab.posttoy.domain;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Builder
+@EqualsAndHashCode
 public class Post {
     private Long id;
     private String title;
@@ -25,5 +27,17 @@ public class Post {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void changePost(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    @Builder
+    public Post(String title, String content, Long userId) {
+        this.title = title;
+        this.content = content;
+        this.userId = userId;
     }
 }
