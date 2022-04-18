@@ -20,6 +20,8 @@ public class CommentMemoryRepository implements CommentRepository {
     @Override
     public Comment save(Comment comment) {
         comment.setId(sequence.incrementAndGet());
+        comment.setCreatedAt(createdTime());
+        comment.setModifiedAt(modifiedTime());
         store.put(comment.getId(), comment);
         return comment;
     }

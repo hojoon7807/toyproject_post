@@ -4,6 +4,7 @@ import com.flab.posttoy.domain.Post;
 import com.flab.posttoy.repository.MyRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,4 +17,12 @@ public interface PostRepository {
     Optional<Post> findByName(String title);
     Optional<List<Post>> findByUsername(String username);
     List<Post> findAll();
+
+    default LocalDateTime createdTime(){
+        return LocalDateTime.now();
+    }
+
+    default LocalDateTime modifiedTime(){
+        return LocalDateTime.now();
+    }
 }

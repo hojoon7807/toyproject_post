@@ -21,6 +21,8 @@ public class PostMemoryRepository implements PostRepository {
     @Override
     public Post save(Post post) {
         post.setId(sequence.incrementAndGet());
+        post.setCreatedAt(createdTime());
+        post.setModifiedAt(modifiedTime());
         store.put(post.getId(), post);
         return post;
     }

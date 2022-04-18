@@ -4,6 +4,7 @@ import com.flab.posttoy.domain.Comment;
 import com.flab.posttoy.repository.MyRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,4 +20,12 @@ public interface CommentRepository {
     Optional<Comment> findByName(String content);
 
     List<Comment> findAll();
+
+    default LocalDateTime createdTime(){
+        return LocalDateTime.now();
+    }
+
+    default LocalDateTime modifiedTime(){
+        return LocalDateTime.now();
+    }
 }
