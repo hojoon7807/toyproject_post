@@ -21,9 +21,21 @@ public class CommentMemoryRepository implements CommentRepository {
     public Comment save(Comment comment) {
         comment.setId(sequence.incrementAndGet());
         comment.setCreatedAt(createdTime());
+        comment.setModifiedAt(comment.getCreatedAt());
+        store.put(comment.getId(), comment);
+        return comment;
+    }
+
+    @Override
+    public Comment update(Comment comment) {
         comment.setModifiedAt(modifiedTime());
         store.put(comment.getId(), comment);
         return comment;
+    }
+
+    @Override
+    public void remove(Long id) {
+        store.remove(id);
     }
 
     @Override
@@ -34,14 +46,6 @@ public class CommentMemoryRepository implements CommentRepository {
     @Override
     public Optional<List<Comment>> findByUserame(String username) {
         return Optional.empty();
-    }
-
-    // comment에서의 findByName의 필요성 필요없다면 어떻게?
-    @Override
-    public Optional<Comment> findByName(String content) {
-        return store.values().stream()
-                .filter(comment -> comment.getContent().equals(content))
-                .findAny();
     }
 
     @Override

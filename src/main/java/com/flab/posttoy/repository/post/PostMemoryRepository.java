@@ -20,10 +20,18 @@ public class PostMemoryRepository implements PostRepository {
 
     @Override
     public Post save(Post post) {
-        post.setId(sequence.incrementAndGet());
-        post.setCreatedAt(createdTime());
-        post.setModifiedAt(modifiedTime());
-        store.put(post.getId(), post);
+        // findById를 써야되나??
+        // store에 postid의 키가 존재하면 values 교체->update, 아니면 save,  save에 2개의 책임을 주는 것인가??
+        if(store.containsKey(post.getId())){
+            post.setModifiedAt(modifiedTime());
+            store.put(post.getId(), post);
+        } else {
+            post.setId(sequence.incrementAndGet());
+            post.setCreatedAt(createdTime());
+            post.setModifiedAt(post.getCreatedAt());
+            store.put(post.getId(), post);
+        }
+
         return post;
     }
 
@@ -47,5 +55,10 @@ public class PostMemoryRepository implements PostRepository {
     @Override
     public List<Post> findAll() {
         return new ArrayList<>(store.values());
+    }
+
+    @Override
+    public void remove(Long id) {
+        store.remove(id);
     }
 }

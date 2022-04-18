@@ -17,6 +17,7 @@ public interface PostRepository {
     Optional<Post> findByName(String title);
     Optional<List<Post>> findByUsername(String username);
     List<Post> findAll();
+    void remove(Long id);
 
     default LocalDateTime createdTime(){
         return LocalDateTime.now();
