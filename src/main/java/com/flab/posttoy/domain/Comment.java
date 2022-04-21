@@ -12,6 +12,14 @@ public class Comment {
     private Long postId;
     private String content;
 
+    public void changeComment(String content) {
+        if(isValidData(content)) this.content = content;
+    }
+
+    private boolean isValidData(String data){
+        return data == null ? true : false;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
