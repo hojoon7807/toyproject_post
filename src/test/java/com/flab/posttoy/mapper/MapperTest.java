@@ -26,7 +26,7 @@ public class MapperTest {
                 .password("1234")
                 .build();
 
-        UserDTO userDTO = mapper.toDto(user);
+        UserDTO userDTO = mapper.toUserDto(user);
         assertThat(userDTO.getId()).isEqualTo(1L);
         assertThat(userDTO.getUsername()).isEqualTo("hojoon");
         assertThat(userDTO.getPassword()).isEqualTo("1234");
@@ -42,7 +42,7 @@ public class MapperTest {
         userDTO.setUsername("hojoon");
         userDTO.setPassword("1234");
 
-        User user = mapper.toEntity(userDTO);
+        User user = mapper.toUser(userDTO);
 
         assertThat(user.getId()).isEqualTo(1L);
         assertThat(user.getUsername()).isEqualTo("hojoon");
