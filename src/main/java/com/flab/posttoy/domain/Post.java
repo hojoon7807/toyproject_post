@@ -1,10 +1,11 @@
 package com.flab.posttoy.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-
+// 불변객체를 유지하기 위해 setter 대신 builder
 @Getter
+@Builder
 public class Post {
     private Long id;
     private Long userId;
