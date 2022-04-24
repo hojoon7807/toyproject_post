@@ -9,6 +9,7 @@ public interface UserRepository {
     User insert(User user);
     void delete(Long id);
     Optional<User> selectById(Long id);
+    Optional<User> selectByName(String username);
     List<User> selectAll();
 
     void clearStore();
