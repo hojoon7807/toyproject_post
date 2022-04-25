@@ -1,75 +1,88 @@
 package com.flab.posttoy.mapper;
 
-import com.flab.posttoy.domain.Comment;
 import com.flab.posttoy.domain.User;
-import com.flab.posttoy.dto.CommentDTO;
-import com.flab.posttoy.dto.UserDTO;
-import com.flab.posttoy.domain.mapper.CommentMapper;
-import com.flab.posttoy.dto.mapper.CommentMapperImpl;
-import com.flab.posttoy.domain.mapper.UserMapper;
-import com.flab.posttoy.dto.mapper.UserMapperImpl;
+import com.flab.posttoy.entity.UserEntity;
+import com.flab.posttoy.web.dto.request.RequestUserDTO;
+import com.flab.posttoy.web.dto.response.ResponseUserDTO;
+import com.flab.posttoy.web.mapper.WebUserMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.mapstruct.factory.Mappers;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
-
+@Slf4j
 public class MapperTest {
 
+    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
+    private final WebUserMapper webUserMapper = Mappers.getMapper(WebUserMapper.class);
+
+
     @Test
-    @DisplayName("User 엔티티를 DTO로 변환 테스트")
-    void userToDtoMapperTest(){
-        ApplicationContext ac = new AnnotationConfigApplicationContext(UserMapperImpl.class);
-        UserMapper mapper = ac.getBean(UserMapper.class);
+    @DisplayName("requestUser를 User로 변환 테스트")
+    void requestUserToUserMapperTest(){
+        RequestUserDTO requestUserDTO = new RequestUserDTO();
+        requestUserDTO.setUsername("hojoon");
+        requestUserDTO.setPassword("1234");
 
-        User user = User.builder()
-                .id(1L)
-                .username("hojoon")
-                .password("1234")
-                .build();
+        User user = webUserMapper.toUser(requestUserDTO);
+        log.info("user = {}", user);
 
-        UserDTO userDTO = mapper.toUserDto(user);
-        assertThat(userDTO.getId()).isEqualTo(1L);
-        assertThat(userDTO.getUsername()).isEqualTo("hojoon");
-        assertThat(userDTO.getPassword()).isEqualTo("1234");
+        assertAll(
+                () -> assertThat(user.getId()).isNull(),
+                () -> assertThat(user.getUsername()).isEqualTo("hojoon"),
+                () -> assertThat(user.getPassword()).isEqualTo("1234")
+                );
+
     }
 
     @Test
-    @DisplayName("UserDTO를 User로 변환 테스트")
-    void DtoToUserMapperTest(){
-        ApplicationContext ac = new AnnotationConfigApplicationContext(UserMapperImpl.class);
-        UserMapper mapper = ac.getBean(UserMapper.class);
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(1L);
-        userDTO.setUsername("hojoon");
-        userDTO.setPassword("1234");
+    @DisplayName("User를 entity로 변환 테스트")
+    void userToEntityMapperTest(){
+        User user = new User( 0L,"hojoon", "1234");
 
-        User user = mapper.toUser(userDTO);
+        UserEntity userEntity = userMapper.toUserEntity(user);
+        log.info("user = {}", userEntity.getUsername());
 
-        assertThat(user.getId()).isEqualTo(1L);
-        assertThat(user.getUsername()).isEqualTo("hojoon");
-        assertThat(user.getPassword()).isEqualTo("1234");
+        assertAll(
+                () -> assertThat(userEntity.getId()).isEqualTo(0L),
+                () -> assertThat(userEntity.getUsername()).isEqualTo("hojoon"),
+                () -> assertThat(userEntity.getPassword()).isEqualTo("1234")
+        );
     }
 
     @Test
-    @DisplayName("Comment 엔티티를 DTO로 변환 테스트")
-    void commentToDtoMapperTest(){
-        ApplicationContext ac = new AnnotationConfigApplicationContext(CommentMapperImpl.class);
-        CommentMapper mapper = ac.getBean(CommentMapperImpl.class);
+    @DisplayName("UserEntity를 User로 변환 테스트")
+    void entityToUserMapperTest(){
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(1L);
+        userEntity.setUsername("hojoon");
+        userEntity.setPassword("1234");
 
-        Comment comment = Comment.builder()
-                .id(1L)
-                .content("comment")
-                .userId(1L)
-                .postId(1L)
-                .build();
+        User user = userMapper.toUser(userEntity);
+        log.info("user = {}", user.getId());
 
-        CommentDTO commentDto = mapper.toCommentDto(comment);
-        assertThat(commentDto.getId()).isEqualTo(1L);
-        assertThat(commentDto.getPostId()).isEqualTo(1L);
-        assertThat(commentDto.getUserId()).isEqualTo(1L);
-        assertThat(commentDto.getContent()).isEqualTo("comment");
+        assertAll(
+                () -> assertThat(user.getId()).isEqualTo(1L),
+                () -> assertThat(user.getUsername()).isEqualTo("hojoon"),
+                () -> assertThat(user.getPassword()).isEqualTo("1234")
+        );
     }
+
+    @Test
+    @DisplayName("user를 responseUser로 변환 테스트")
+    void userToResponseUserMapperTest(){
+        User user = new User( 1L,null, "1234");
+
+        ResponseUserDTO responseUserDTO = webUserMapper.toResponseUser(user);
+        log.info("user = {}", responseUserDTO.getUsername());
+
+        assertAll(
+                () -> assertThat(responseUserDTO.getId()).isEqualTo(1L),
+                () -> assertThat(responseUserDTO.getUsername()).isEqualTo("hojoon")
+        );
+    }
+
 }
