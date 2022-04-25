@@ -31,7 +31,8 @@ public class CommentController {
 
     @PatchMapping("/posts/{postId}/comments/{commentId}")
     public ResponseEntity<ResponseCommentDTO> commentModify(@RequestBody @Valid ModifyCommentReqeust modifyRequest, @PathVariable Long commentId) {
-        CommentDTO commentDTO = commentService.modifyComment(commentMapper.toUpdateCommentDto(modifyRequest), commentId);
+//        CommentDTO commentDTO = commentService.modifyComment(commentMapper.toUpdateCommentDto(modifyRequest), commentId);
+        CommentDTO commentDTO = commentService.modifyComment(commentId, modifyRequest.getContent());
         ResponseCommentDTO responseCommentDTO = commentMapper.toResponseCommentDto(commentDTO);
         return new ResponseEntity<>(responseCommentDTO, HttpStatus.OK);
     }
