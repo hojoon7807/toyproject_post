@@ -3,7 +3,7 @@ package com.flab.posttoy.service;
 import com.flab.posttoy.domain.Comment;
 import com.flab.posttoy.dto.CommentDTO;
 import com.flab.posttoy.dto.UpdateCommentDTO;
-import com.flab.posttoy.dto.mapper.CommentMapper;
+import com.flab.posttoy.domain.mapper.CommentMapper;
 import com.flab.posttoy.exception.comment.CommentNotFoundException;
 import com.flab.posttoy.exception.post.PostNotFoundException;
 import com.flab.posttoy.repository.comment.CommentRepository;

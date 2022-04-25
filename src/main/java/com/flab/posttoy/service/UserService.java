@@ -1,11 +1,8 @@
 package com.flab.posttoy.service;
 
-import com.flab.posttoy.domain.User;
 import com.flab.posttoy.dto.UserDTO;
-import com.flab.posttoy.dto.mapper.CommentMapper;
-import com.flab.posttoy.dto.mapper.UserMapper;
+import com.flab.posttoy.domain.mapper.UserMapper;
 import com.flab.posttoy.repository.user.UserRepository;
-import com.flab.posttoy.web.dto.request.RequestCreateUserDTO;
 import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

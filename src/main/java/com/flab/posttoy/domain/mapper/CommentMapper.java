@@ -1,4 +1,4 @@
-package com.flab.posttoy.dto.mapper;
+package com.flab.posttoy.domain.mapper;
 
 import com.flab.posttoy.domain.Comment;
 import com.flab.posttoy.dto.CommentDTO;
