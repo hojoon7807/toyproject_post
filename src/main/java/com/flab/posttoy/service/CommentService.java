@@ -35,11 +35,10 @@ public class CommentService implements ICommentService{
     }
 
     @Override
-    public CommentDTO modifyComment(Long commentId, String contents) {
+    public Comment modifyComment(Long commentId, String contents) {
         Comment existComment = validateExistComment(commentId);
         existComment.changeComment(contents);
-        commentRepository.update(existComment);
-        return commentMapper.toCommentDto(existComment);
+        return commentRepository.update(existComment);
     }
 
 

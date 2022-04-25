@@ -8,7 +8,7 @@ public interface ICommentService {
     CommentDTO addComment(CommentDTO commentDTO);
 
     CommentDTO modifyComment(UpdateCommentDTO updateCommentDTO, Long id);
-    CommentDTO modifyComment(Long commentId, String contents);
+    Comment modifyComment(Long commentId, String contents);
 
     void removeComment(Long id);
 }

@@ -1,5 +1,6 @@
 package com.flab.posttoy.web.controller;
 
+import com.flab.posttoy.domain.Comment;
 import com.flab.posttoy.dto.CommentDTO;
 import com.flab.posttoy.dto.mapper.CommentMapper;
 import com.flab.posttoy.service.ICommentService;
@@ -32,8 +33,14 @@ public class CommentController {
     @PatchMapping("/posts/{postId}/comments/{commentId}")
     public ResponseEntity<ResponseCommentDTO> commentModify(@RequestBody @Valid ModifyCommentReqeust modifyRequest, @PathVariable Long commentId) {
 //        CommentDTO commentDTO = commentService.modifyComment(commentMapper.toUpdateCommentDto(modifyRequest), commentId);
-        CommentDTO commentDTO = commentService.modifyComment(commentId, modifyRequest.getContent());
+
+        //원래 코드 DTO 를 DTO 로 transform ?
+        //CommentDTO commentDTO = commentService.modifyComment(commentId, modifyRequest.getContent());
+        //ResponseCommentDTO responseCommentDTO = commentMapper.toResponseCommentDto(commentDTO);
+
+        Comment comment = commentService.modifyComment(commentId, modifyRequest.getContent());
         ResponseCommentDTO responseCommentDTO = commentMapper.toResponseCommentDto(commentDTO);
+
         return new ResponseEntity<>(responseCommentDTO, HttpStatus.OK);
     }
 
