@@ -4,6 +4,7 @@ import com.flab.posttoy.dto.CommentDTO;
 import com.flab.posttoy.dto.mapper.CommentMapper;
 import com.flab.posttoy.service.ICommentService;
 import com.flab.posttoy.web.dto.mapper.WebCommentMapper;
+import com.flab.posttoy.web.dto.request.ModifyCommentReqeust;
 import com.flab.posttoy.web.dto.request.RequestCommentDTO;
 import com.flab.posttoy.web.dto.response.ResponseCommentDTO;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +30,8 @@ public class CommentController {
     }
 
     @PatchMapping("/posts/{postId}/comments/{commentId}")
-    public ResponseEntity<ResponseCommentDTO> commentModify(@RequestBody RequestCommentDTO requestCommentDTO, @PathVariable Long commentId) {
-        CommentDTO commentDTO = commentService.modifyComment(commentMapper.toUpdateCommentDto(requestCommentDTO), commentId);
+    public ResponseEntity<ResponseCommentDTO> commentModify(@RequestBody @Valid ModifyCommentReqeust modifyRequest, @PathVariable Long commentId) {
+        CommentDTO commentDTO = commentService.modifyComment(commentMapper.toUpdateCommentDto(modifyRequest), commentId);
         ResponseCommentDTO responseCommentDTO = commentMapper.toResponseCommentDto(commentDTO);
         return new ResponseEntity<>(responseCommentDTO, HttpStatus.OK);
     }
