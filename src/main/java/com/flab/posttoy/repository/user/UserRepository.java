@@ -1,16 +1,16 @@
 package com.flab.posttoy.repository.user;
 
-import com.flab.posttoy.domain.User;
+import com.flab.posttoy.entity.UserEntity;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository {
-    User insert(User user);
+    UserEntity insert(UserEntity user);
     void delete(Long id);
-    Optional<User> selectById(Long id);
-    Optional<User> selectByName(String username);
-    List<User> selectAll();
+    Optional<UserEntity> selectById(Long id);
+    Optional<UserEntity> selectByName(String username);
+    List<UserEntity> selectAll();
 
     void clearStore();
 
