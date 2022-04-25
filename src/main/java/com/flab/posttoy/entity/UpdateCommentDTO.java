@@ -1,4 +1,4 @@
-package com.flab.posttoy.dto;
+package com.flab.posttoy.entity;
 
 import lombok.Getter;
 import lombok.Setter;
