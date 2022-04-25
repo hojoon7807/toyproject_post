@@ -16,8 +16,8 @@ public class UserService{
 
     public User addUser(User user) {
         validateDuplicatedUser(user.getUsername());
-         userRepository.insert(userMapper.toUserEntity(user));
-        return null;
+        UserEntity userEntity = userRepository.insert(userMapper.toUserEntity(user));
+        return userMapper.toUser(userEntity);
     }
 
     private void validateDuplicatedUser(String username) {
