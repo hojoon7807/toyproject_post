@@ -1,7 +1,8 @@
 package com.flab.posttoy.service;
 
-import com.flab.posttoy.dto.UserDTO;
-import com.flab.posttoy.domain.mapper.UserMapper;
+import com.flab.posttoy.domain.User;
+import com.flab.posttoy.entity.UserEntity;
+import com.flab.posttoy.mapper.UserMapper;
 import com.flab.posttoy.repository.user.UserRepository;
 import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
@@ -9,14 +10,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements IUserService{
+public class UserService{
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    @Override
-    public UserDTO addUser(UserDTO userDTO) {
-        validateDuplicatedUser(userDTO.getUsername());
-         userRepository.insert(userMapper.toUser(userDTO));
+    public User addUser(User user) {
+        validateDuplicatedUser(user.getUsername());
+         userRepository.insert(userMapper.toUserEntity(user));
         return null;
     }
 
