@@ -39,7 +39,7 @@ public class CommentController {
         //ResponseCommentDTO responseCommentDTO = commentMapper.toResponseCommentDto(commentDTO);
 
         Comment comment = commentService.modifyComment(commentId, modifyRequest.getContent());
-        ResponseCommentDTO responseCommentDTO = commentMapper.toResponseCommentDto(commentDTO);
+        ResponseCommentDTO responseCommentDTO = commentMapper.toResponseCommentDto(comment);
 
         return new ResponseEntity<>(responseCommentDTO, HttpStatus.OK);
     }
