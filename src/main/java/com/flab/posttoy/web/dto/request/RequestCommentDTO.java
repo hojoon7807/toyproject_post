@@ -20,5 +20,5 @@ public class RequestCommentDTO {
     private Long userId;
 
     @NotEmpty
-    private String Content;
+    private String content;
 }

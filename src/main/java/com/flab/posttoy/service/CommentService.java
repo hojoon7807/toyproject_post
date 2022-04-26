@@ -1,9 +1,9 @@
 package com.flab.posttoy.service;
 
 import com.flab.posttoy.domain.Comment;
-import com.flab.posttoy.dto.CommentDTO;
-import com.flab.posttoy.dto.UpdateCommentDTO;
-import com.flab.posttoy.dto.mapper.CommentMapper;
+import com.flab.posttoy.entity.CommentDTO;
+import com.flab.posttoy.entity.UpdateCommentDTO;
+import com.flab.posttoy.mapper.CommentMapper;
 import com.flab.posttoy.exception.comment.CommentNotFoundException;
 import com.flab.posttoy.exception.post.PostNotFoundException;
 import com.flab.posttoy.repository.comment.CommentRepository;
@@ -13,20 +13,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CommentService implements ICommentService{
+public class CommentService{
 
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
     private final PostRepository postRepository;
 
-    @Override
     public CommentDTO addComment(CommentDTO commentDTO) {
         validateExistPost(commentDTO.getPostId());
         Comment comment = commentRepository.insert(commentMapper.toComment(commentDTO));
         return commentMapper.toCommentDto(comment);
     }
 
-    @Override
     public CommentDTO modifyComment(UpdateCommentDTO updateCommentDTO, Long id) {
         Comment existComment = validateExistComment(id);
         existComment.changeComment(updateCommentDTO.getContent());
@@ -34,7 +32,6 @@ public class CommentService implements ICommentService{
         return commentMapper.toCommentDto(existComment);
     }
 
-    @Override
     public void removeComment(Long id) {
         Comment existComment = validateExistComment(id);
         commentRepository.delete(existComment.getId());

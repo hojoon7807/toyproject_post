@@ -3,7 +3,8 @@ package com.flab.posttoy.exception;
 import org.springframework.http.HttpStatus;
 
 public enum UserErrorCode implements ErrorCodeModel{
-    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "user not found");
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "user not found"),
+    DUPLICATED_USERNAME(HttpStatus.BAD_REQUEST, "duplicated username");
 
     private int status;
     private String error;
