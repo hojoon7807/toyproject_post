@@ -16,4 +16,4 @@
 
 
 #### Linked Issue
-close `#Issue number`# PULL_REQUEST_TEMPLATE.md
+close `#Issue number`
