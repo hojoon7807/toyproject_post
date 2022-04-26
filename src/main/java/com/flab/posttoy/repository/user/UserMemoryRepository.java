@@ -31,7 +31,7 @@ public class UserMemoryRepository implements UserRepository{
     public Optional<UserEntity> selectByName(String username) {
         return store.values().stream()
                 .filter(user -> user.getUsername().equals(username))
-                .findAny();
+                .findFirst();
     }
 
     @Override
