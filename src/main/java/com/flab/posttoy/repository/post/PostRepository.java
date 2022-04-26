@@ -2,17 +2,18 @@ package com.flab.posttoy.repository.post;
 
 import com.flab.posttoy.domain.Post;
 import com.flab.posttoy.domain.User;
+import com.flab.posttoy.entity.PostEntity;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface PostRepository {
-    Post insert(Post post);
-    Post update(Post post);
+    PostEntity insert(PostEntity post);
+    PostEntity update(PostEntity post);
     void delete(Long id);
-    Optional<Post> selectById(Long id);
-    List<Post> selectByUserId(Long userId);
-    List<User> selectAll();
+    Optional<PostEntity> selectById(Long id);
+    List<PostEntity> selectByUserId(Long userId);
+    List<PostEntity> selectAll();
 
     void clearStore();
 
