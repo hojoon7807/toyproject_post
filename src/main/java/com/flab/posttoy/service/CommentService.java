@@ -1,7 +1,7 @@
 package com.flab.posttoy.service;
 
 import com.flab.posttoy.domain.Comment;
-import com.flab.posttoy.entity.CommentDTO;
+import com.flab.posttoy.entity.CommentEntity;
 import com.flab.posttoy.entity.UpdateCommentDTO;
 import com.flab.posttoy.mapper.CommentMapper;
 import com.flab.posttoy.exception.comment.CommentNotFoundException;
@@ -19,13 +19,13 @@ public class CommentService{
     private final CommentMapper commentMapper;
     private final PostRepository postRepository;
 
-    public CommentDTO addComment(CommentDTO commentDTO) {
-        validateExistPost(commentDTO.getPostId());
-        Comment comment = commentRepository.insert(commentMapper.toComment(commentDTO));
+    public CommentEntity addComment(CommentEntity commentEntity) {
+        validateExistPost(commentEntity.getPostId());
+        Comment comment = commentRepository.insert(commentMapper.toComment(commentEntity));
         return commentMapper.toCommentDto(comment);
     }
 
-    public CommentDTO modifyComment(UpdateCommentDTO updateCommentDTO, Long id) {
+    public CommentEntity modifyComment(UpdateCommentDTO updateCommentDTO, Long id) {
         Comment existComment = validateExistComment(id);
         existComment.changeComment(updateCommentDTO.getContent());
         commentRepository.update(existComment);
