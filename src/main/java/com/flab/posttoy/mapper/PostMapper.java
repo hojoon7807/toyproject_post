@@ -1,7 +1,7 @@
 package com.flab.posttoy.mapper;
 
 import com.flab.posttoy.domain.Post;
-import com.flab.posttoy.entity.PostEntity;
+import com.flab.posttoy.repository.post.PostEntity;
 import org.mapstruct.Mapper;
 
 // spring 빈으로 등록해준다.
