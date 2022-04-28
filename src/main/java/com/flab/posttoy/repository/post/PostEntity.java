@@ -5,9 +5,7 @@ import lombok.*;
 @Getter
 @Builder
 public class PostEntity {
-    @Builder.Default
     private Long id;
-
     private Long userId;
     private String title;
     private String content;
