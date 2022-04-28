@@ -1,13 +1,14 @@
 package com.flab.posttoy.service;
 
 import com.flab.posttoy.domain.Comment;
-import com.flab.posttoy.entity.CommentEntity;
 import com.flab.posttoy.entity.UpdateCommentDTO;
 import com.flab.posttoy.mapper.CommentMapper;
 import com.flab.posttoy.exception.comment.CommentNotFoundException;
 import com.flab.posttoy.exception.post.PostNotFoundException;
-import com.flab.posttoy.repository.comment.CommentRepository;
-import com.flab.posttoy.repository.post.PostRepository;
+import com.flab.posttoy.domain.port.CommentRepository;
+import com.flab.posttoy.domain.port.PostRepository;
+import com.flab.posttoy.repository.comment.CommentEntity;
+import com.flab.posttoy.repository.comment.CommentMemoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

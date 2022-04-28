@@ -1,6 +1,7 @@
 package com.flab.posttoy.web.controller;
 
-import com.flab.posttoy.entity.CommentEntity;
+import com.flab.posttoy.repository.comment.CommentEntity;
+import com.flab.posttoy.repository.comment.CommentMemoryRepository;
 import com.flab.posttoy.service.CommentService;
 import com.flab.posttoy.web.mapper.WebCommentMapper;
 import com.flab.posttoy.web.dto.request.RequestCommentDTO;
