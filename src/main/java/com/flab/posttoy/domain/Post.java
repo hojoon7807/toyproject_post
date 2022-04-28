@@ -1,5 +1,6 @@
 package com.flab.posttoy.domain;
 
+import com.flab.posttoy.repository.post.PostEntity;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,9 +9,17 @@ import lombok.Getter;
 @Getter
 @Builder
 public class Post {
-    @Builder.Default
-    private Long id = Long.valueOf(0L);
+    private Long id;
     private Long userId;
     private String title;
     private String content;
+
+    public static Post from(PostEntity postEntity) {
+        return Post.builder()
+                .id(postEntity.getId())
+                .userId(postEntity.getUserId())
+                .title(postEntity.getTitle())
+                .content(postEntity.getContent())
+                .build();
+    }
 }
