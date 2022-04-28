@@ -1,6 +1,6 @@
 package com.flab.posttoy.repository.post;
 
-import com.flab.posttoy.entity.PostEntity;
+import com.flab.posttoy.domain.port.PostRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
