@@ -57,12 +57,14 @@ public class PostService {
         return postList;
     };
 
-    public Post modifyPost(Post post, Long id) {
+    public Post modifyPost(UpdatePostCommand updatePostCommand, Long id) {
         PostEntity existPost = postRepository.selectById(id).orElseThrow(() ->
                 new PostNotFoundException("해당 포스트가 존재하지 않습니다")
         );
-        existPost.changePost(post.getTitle(), post.getContent());
-        return postMapper.toPost(postRepository.update(existPost));
+
+        existPost.changePost(updatePostCommand.getTitle(), updatePostCommand.getContent());
+
+        return Post.from(postRepository.update(existPost));
     }
 
     public void removePost(Long id){
