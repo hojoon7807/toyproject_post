@@ -1,27 +1,26 @@
-package com.flab.posttoy.entity;
+package com.flab.posttoy.repository.comment;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
 
 @Getter
 @Builder
-public class PostEntity {
+public class CommentEntity {
     @Builder.Default
     private Long id = Long.valueOf(0L);
-
     private Long userId;
-    private String title;
+    private Long postId;
     private String content;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void changePost(String title, String content) {
-        if(isValidData(title)) this.title = title;
+    public void changeComment(String content) {
         if(isValidData(content)) this.content = content;
     }
 
     private boolean isValidData(String data){
         return data != null ? true : false;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
