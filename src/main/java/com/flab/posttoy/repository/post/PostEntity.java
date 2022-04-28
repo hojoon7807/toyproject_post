@@ -20,6 +20,6 @@ public class PostEntity {
     }
 
     private boolean isValidData(String data){
-        return data != null ? true : false;
+        return data == null || data.isBlank() ? false : true;
     }
 }
