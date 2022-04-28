@@ -1,13 +1,13 @@
-package com.flab.posttoy.repository.post;
+package com.flab.posttoy.domain.port;
 
-import com.flab.posttoy.domain.Post;
-import com.flab.posttoy.domain.User;
-import com.flab.posttoy.entity.PostEntity;
+import com.flab.posttoy.repository.post.PostEntity;
+import com.flab.posttoy.repository.post.PostMemoryRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface PostRepository {
+
     PostEntity insert(PostEntity post);
     PostEntity update(PostEntity post);
     void delete(Long id);
