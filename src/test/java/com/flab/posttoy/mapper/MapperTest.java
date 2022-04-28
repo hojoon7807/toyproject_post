@@ -1,6 +1,7 @@
 package com.flab.posttoy.mapper;
 
 import com.flab.posttoy.domain.User;
+import com.flab.posttoy.repository.user.UserEntity;
 import com.flab.posttoy.repository.user.UserMemoryRepository;
 import com.flab.posttoy.web.dto.request.RequestUserDTO;
 import com.flab.posttoy.web.dto.response.ResponseUserDTO;
@@ -43,7 +44,7 @@ public class MapperTest {
     void userToEntityMapperTest(){
         User user = new User( 0L,"hojoon", "1234");
 
-        UserMemoryRepository.UserEntity userEntity = userMapper.toUserEntity(user);
+        UserEntity userEntity = userMapper.toUserEntity(user);
         log.info("user = {}", userEntity.getUsername());
 
         assertAll(
@@ -56,7 +57,7 @@ public class MapperTest {
     @Test
     @DisplayName("UserEntity를 User로 변환 테스트")
     void entityToUserMapperTest(){
-        UserMemoryRepository.UserEntity userEntity = new UserMemoryRepository.UserEntity();
+        UserEntity userEntity = new UserEntity();
         userEntity.setId(1L);
         userEntity.setUsername("hojoon");
         userEntity.setPassword("1234");
