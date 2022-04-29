@@ -1,4 +1,4 @@
-package com.flab.posttoy.entity;
+package com.flab.posttoy.repository.user;
 
 import lombok.Getter;
 import lombok.Setter;

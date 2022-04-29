@@ -1,4 +1,4 @@
-package com.flab.posttoy.repository.comment;
+package com.flab.posttoy.domain.port;
 
 import com.flab.posttoy.domain.Comment;
 

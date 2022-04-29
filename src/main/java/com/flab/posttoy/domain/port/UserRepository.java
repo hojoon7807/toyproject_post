@@ -1,6 +1,7 @@
-package com.flab.posttoy.repository.user;
+package com.flab.posttoy.domain.port;
 
-import com.flab.posttoy.entity.UserEntity;
+import com.flab.posttoy.repository.user.UserEntity;
+import com.flab.posttoy.repository.user.UserMemoryRepository;
 
 import java.util.List;
 import java.util.Optional;
