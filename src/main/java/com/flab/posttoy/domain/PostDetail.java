@@ -1,7 +1,5 @@
-package com.flab.posttoy.service;
+package com.flab.posttoy.domain;
 
-import com.flab.posttoy.domain.Comment;
-import com.flab.posttoy.domain.Post;
 import lombok.Getter;
 
 import java.util.List;
