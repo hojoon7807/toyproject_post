@@ -1,7 +1,6 @@
 package com.flab.posttoy.service;
 
 import com.flab.posttoy.domain.User;
-import com.flab.posttoy.mapper.UserMapper;
 import com.flab.posttoy.domain.port.UserRepository;
 import com.flab.posttoy.repository.user.UserEntity;
 import com.sun.jdi.request.DuplicateRequestException;
@@ -12,12 +11,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService{
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
 
-    public User addUser(User user) {
-        validateDuplicatedUser(user.getUsername());
-        UserEntity userEntity = userRepository.insert(userMapper.toUserEntity(user));
-        return userMapper.toUser(userEntity);
+    public User addUser(CreateUserCommand createUserCommand) {
+        validateDuplicatedUser(createUserCommand.getUsername());
+        UserEntity userEntity = userRepository.insert(createUserCommand.toEntity());
+        User user = new User(userEntity.getId(), userEntity.getUsername(), userEntity.getPassword());
+        return user;
     }
 
     private void validateDuplicatedUser(String username) {

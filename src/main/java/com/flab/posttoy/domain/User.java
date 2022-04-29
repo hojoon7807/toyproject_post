@@ -1,10 +1,7 @@
 package com.flab.posttoy.domain;
-
-import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-// 불변객체를 유지하기 위해 setter 대신 builder
 @Getter
 public class User {
     private Long id;
