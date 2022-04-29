@@ -1,7 +1,6 @@
 package com.flab.posttoy.web.controller;
 
-import com.flab.posttoy.repository.comment.CommentEntity;
-import com.flab.posttoy.repository.comment.CommentMemoryRepository;
+import com.flab.posttoy.entity.CommentDTO;
 import com.flab.posttoy.service.CommentService;
 import com.flab.posttoy.web.mapper.WebCommentMapper;
 import com.flab.posttoy.web.dto.request.RequestCommentDTO;
@@ -23,15 +22,15 @@ public class CommentController {
 
     @PostMapping("/posts/{postId}/comments")
     public ResponseEntity<ResponseCommentDTO> commentSave(@RequestBody @Valid RequestCommentDTO requestCommentDTO){
-        CommentEntity commentEntity = commentService.addComment(commentMapper.toCommentDto(requestCommentDTO));
-        ResponseCommentDTO responseCommentDTO = commentMapper.toResponseCommentDto(commentEntity);
+        CommentDTO commentDTO = commentService.addComment(commentMapper.toCommentDto(requestCommentDTO));
+        ResponseCommentDTO responseCommentDTO = commentMapper.toResponseCommentDto(commentDTO);
         return ResponseEntity.created(URI.create("/posts/"+responseCommentDTO.getPostId())).body(responseCommentDTO);
     }
 
     @PatchMapping("/posts/{postId}/comments/{commentId}")
     public ResponseEntity<ResponseCommentDTO> commentModify(@RequestBody RequestCommentDTO requestCommentDTO, @PathVariable Long commentId) {
-        CommentEntity commentEntity = commentService.modifyComment(commentMapper.toUpdateCommentDto(requestCommentDTO), commentId);
-        ResponseCommentDTO responseCommentDTO = commentMapper.toResponseCommentDto(commentEntity);
+        CommentDTO commentDTO = commentService.modifyComment(commentMapper.toUpdateCommentDto(requestCommentDTO), commentId);
+        ResponseCommentDTO responseCommentDTO = commentMapper.toResponseCommentDto(commentDTO);
         return new ResponseEntity<>(responseCommentDTO, HttpStatus.OK);
     }
 

@@ -1,8 +1,7 @@
 package com.flab.posttoy.mapper;
 
 import com.flab.posttoy.domain.User;
-import com.flab.posttoy.repository.user.UserEntity;
-import com.flab.posttoy.repository.user.UserMemoryRepository;
+import com.flab.posttoy.entity.UserEntity;
 import com.flab.posttoy.web.dto.request.RequestUserDTO;
 import com.flab.posttoy.web.dto.response.ResponseUserDTO;
 import com.flab.posttoy.web.mapper.WebUserMapper;

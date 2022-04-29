@@ -1,6 +1,7 @@
 package com.flab.posttoy.repository.user;
 
-import com.flab.posttoy.domain.port.UserRepository;
+import com.flab.posttoy.domain.User;
+import com.flab.posttoy.entity.UserEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
-public class UserMemoryRepository implements UserRepository {
+public class UserMemoryRepository implements UserRepository{
     private final ConcurrentHashMap<Long, UserEntity> store = new ConcurrentHashMap();
     private AtomicLong sequence = new AtomicLong();
 

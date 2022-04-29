@@ -1,9 +1,9 @@
 package com.flab.posttoy.service;
 
 import com.flab.posttoy.domain.User;
+import com.flab.posttoy.entity.UserEntity;
 import com.flab.posttoy.mapper.UserMapper;
-import com.flab.posttoy.domain.port.UserRepository;
-import com.flab.posttoy.repository.user.UserEntity;
+import com.flab.posttoy.repository.user.UserRepository;
 import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
