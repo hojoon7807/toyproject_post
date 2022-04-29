@@ -14,18 +14,18 @@ import java.util.stream.Collectors;
 @Repository
 public class CommentMemoryRepository implements CommentRepository {
 
-    private final ConcurrentHashMap<Long, Comment> store = new ConcurrentHashMap();
+    private final ConcurrentHashMap<Long, CommentEntity> store = new ConcurrentHashMap();
     private AtomicLong sequence = new AtomicLong();
 
     @Override
-    public Comment insert(Comment comment) {
+    public CommentEntity insert(CommentEntity comment) {
         comment.setId(sequence.incrementAndGet());
         store.put(comment.getId(), comment);
         return comment;
     }
 
     @Override
-    public Comment update(Comment comment) {
+    public CommentEntity update(CommentEntity comment) {
         store.put(comment.getId(), comment);
         return comment;
     }
@@ -36,19 +36,19 @@ public class CommentMemoryRepository implements CommentRepository {
     }
 
     @Override
-    public Optional<Comment> selectById(Long id) {
+    public Optional<CommentEntity> selectById(Long id) {
         return Optional.ofNullable(store.get(id));
     }
 
     @Override
-    public List<Comment> selectByPostId(Long postId) {
+    public List<CommentEntity> selectByPostId(Long postId) {
         return store.values().stream()
                 .filter(comment -> comment.getPostId().equals(postId))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Comment> selectAll() {
+    public List<CommentEntity> selectAll() {
         return new ArrayList<>(store.values());
     }
 
