@@ -1,38 +1,35 @@
 package com.flab.posttoy.web.controller;
 
-import com.flab.posttoy.repository.comment.CommentEntity;
-import com.flab.posttoy.repository.comment.CommentMemoryRepository;
+import com.flab.posttoy.domain.Comment;
 import com.flab.posttoy.service.CommentService;
-import com.flab.posttoy.web.mapper.WebCommentMapper;
-import com.flab.posttoy.web.dto.request.RequestCommentDTO;
-import com.flab.posttoy.web.dto.response.ResponseCommentDTO;
+import com.flab.posttoy.web.dto.request.CreateCommentRequest;
+import com.flab.posttoy.web.dto.request.UpdateCommentRequest;
+import com.flab.posttoy.web.dto.response.CommentResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
 public class CommentController {
 
     private final CommentService commentService;
-    private final WebCommentMapper commentMapper;
 
     @PostMapping("/posts/{postId}/comments")
-    public ResponseEntity<ResponseCommentDTO> commentSave(@RequestBody @Valid RequestCommentDTO requestCommentDTO){
-        CommentEntity commentEntity = commentService.addComment(commentMapper.toCommentDto(requestCommentDTO));
-        ResponseCommentDTO responseCommentDTO = commentMapper.toResponseCommentDto(commentEntity);
-        return ResponseEntity.created(URI.create("/posts/"+responseCommentDTO.getPostId())).body(responseCommentDTO);
+    public ResponseEntity<CommentResponseDTO> commentSave(@RequestBody @Valid CreateCommentRequest createCommentRequest){
+        Comment comment = commentService.addComment(createCommentRequest.toCommand());
+        return new ResponseEntity<>(CommentResponseDTO.from(comment),HttpStatus.CREATED);
     }
 
     @PatchMapping("/posts/{postId}/comments/{commentId}")
-    public ResponseEntity<ResponseCommentDTO> commentModify(@RequestBody RequestCommentDTO requestCommentDTO, @PathVariable Long commentId) {
-        CommentEntity commentEntity = commentService.modifyComment(commentMapper.toUpdateCommentDto(requestCommentDTO), commentId);
-        ResponseCommentDTO responseCommentDTO = commentMapper.toResponseCommentDto(commentEntity);
-        return new ResponseEntity<>(responseCommentDTO, HttpStatus.OK);
+    public ResponseEntity<CommentResponseDTO> commentModify(@RequestBody @Valid UpdateCommentRequest updateCommentRequest,
+                                                            @PathVariable Long commentId,
+                                                            @PathVariable Long postId) {
+        Comment comment = commentService.modifyComment(updateCommentRequest.toCommand(commentId,postId));
+        return new ResponseEntity<>(CommentResponseDTO.from(comment), HttpStatus.OK);
     }
 
     @DeleteMapping("/posts/{postId}/comments/{commentId}")
