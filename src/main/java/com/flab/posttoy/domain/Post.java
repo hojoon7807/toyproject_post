@@ -7,19 +7,17 @@ import lombok.Getter;
 
 // 불변객체를 유지하기 위해 setter 대신 builder
 @Getter
-@Builder
 public class Post {
     private Long id;
     private Long userId;
     private String title;
     private String content;
 
-    public static Post from(PostEntity postEntity) {
-        return Post.builder()
-                .id(postEntity.getId())
-                .userId(postEntity.getUserId())
-                .title(postEntity.getTitle())
-                .content(postEntity.getContent())
-                .build();
+    @Builder
+    public Post(Long id, Long userId, String title, String content) {
+        this.id = id;
+        this.userId = userId;
+        this.title = title;
+        this.content = content;
     }
 }

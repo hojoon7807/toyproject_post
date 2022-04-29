@@ -44,13 +44,13 @@ public class PostController {
 
     @GetMapping("/posts/{postId}")
     public ResponseEntity<PostDetailResponseDTO> postDetail(@PathVariable @Min(1) Long postId){
-        postService.findPost(postId);
+        PostDetailResponseDTO postDetailResponseDTO = PostDetailResponseDTO.from(postService.findPost(postId));
 
-        return new ResponseEntity<>(new PostDetailResponseDTO(),HttpStatus.OK);
+        return new ResponseEntity<>(postDetailResponseDTO,HttpStatus.OK);
     }
 
     @PatchMapping("posts/{postId}")
-    public ResponseEntity<PostResponseDTO> postModify(@RequestBody UpdatePostRequest updatePostRequest, @PathVariable @Min(1) Long postId) {
+    public ResponseEntity<PostResponseDTO> postModify(@RequestBody @Valid UpdatePostRequest updatePostRequest, @PathVariable @Min(1) Long postId) {
         Post post = postService.modifyPost(UpdatePostCommand.of(
                 updatePostRequest.getUserId()
                 ,updatePostRequest.getTitle()

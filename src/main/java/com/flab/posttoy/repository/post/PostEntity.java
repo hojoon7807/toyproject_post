@@ -1,5 +1,6 @@
 package com.flab.posttoy.repository.post;
 
+import com.flab.posttoy.domain.Post;
 import lombok.*;
 
 @Getter
@@ -21,5 +22,14 @@ public class PostEntity {
 
     private boolean isValidData(String data){
         return data == null || data.isBlank() ? false : true;
+    }
+
+    public Post toDomain(){
+        return Post.builder()
+                .id(id)
+                .userId(userId)
+                .title(title)
+                .content(content)
+                .build();
     }
 }
