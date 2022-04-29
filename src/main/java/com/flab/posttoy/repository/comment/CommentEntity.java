@@ -4,20 +4,26 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
 public class CommentEntity {
-    @Builder.Default
-    private Long id = Long.valueOf(0L);
+    private Long id;
     private Long userId;
     private Long postId;
     private String content;
+
+    @Builder
+    private CommentEntity(Long id, Long userId, Long postId, String content) {
+        this.id = id;
+        this.userId = userId;
+        this.postId = postId;
+        this.content = content;
+    }
 
     public void changeComment(String content) {
         if(isValidData(content)) this.content = content;
     }
 
     private boolean isValidData(String data){
-        return data != null ? true : false;
+        return data == null || data.isBlank() ? false : true;
     }
 
     public void setId(Long id) {
