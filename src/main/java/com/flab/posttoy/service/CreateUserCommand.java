@@ -15,9 +15,6 @@ public class CreateUserCommand {
     }
 
     public UserEntity toEntity(){
-        return UserEntity.builder()
-                .username(username)
-                .password(password)
-                .build();
+        return new UserEntity(username, password);
     }
 }
