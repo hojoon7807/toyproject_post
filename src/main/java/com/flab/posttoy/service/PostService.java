@@ -1,9 +1,10 @@
 package com.flab.posttoy.service;
 
+import com.flab.posttoy.domain.Comment;
 import com.flab.posttoy.domain.Post;
+import com.flab.posttoy.domain.PostDetail;
 import com.flab.posttoy.exception.post.PostNotFoundException;
 import com.flab.posttoy.exception.user.UserNotFoundException;
-import com.flab.posttoy.mapper.PostMapper;
 import com.flab.posttoy.domain.port.CommentRepository;
 import com.flab.posttoy.domain.port.PostRepository;
 import com.flab.posttoy.domain.port.UserRepository;
@@ -20,7 +21,6 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
-    private final PostMapper postMapper;
 
     public Post addPost(CreatePostCommand createPostCommand) {
         userRepository.selectById(createPostCommand.getUserId()).orElseThrow(()->
@@ -28,22 +28,33 @@ public class PostService {
         );
 
         PostEntity postEntity = postRepository.insert(createPostCommand.toEntity());
-        return Post.from(postEntity);
+        return postEntity.toDomain();
     }
 
     public List<Post> findAllPosts() {
         List<Post> postList = postRepository.selectAll().stream()
-                .map(postEntity -> postMapper.toPost(postEntity))
+                .map(PostEntity::toDomain)
                 .collect(Collectors.toList());
         return postList;
     }
 
-    public Post findPost(Long id){
-        Post post = postMapper.toPost(postRepository.selectById(id).orElseThrow(() ->
+    public PostDetail findPost(Long id){
+        PostEntity existPost = postRepository.selectById(id).orElseThrow(() ->
                 new PostNotFoundException("해당 포스트가 존재하지 않습니다")
-        ));
+        );
+
+        // mapper를 사용하지 않을 경우 Entity에서 toDomain?? Comment에서 from(CommentEntity)??
+        List<Comment> commentList = commentRepository.selectByPostId(existPost.getId()).stream()
+                .map(commentEntity -> Comment.builder()
+                        .id(commentEntity.getId())
+                        .userId(commentEntity.getUserId())
+                        .postId(commentEntity.getPostId())
+                        .content(commentEntity.getContent())
+                        .build())
+                .collect(Collectors.toList());
+
         // comment refectoring 후 작성
-        return post;
+        return PostDetail.of(existPost.toDomain(),commentList);
     }
 
     public List<Post> findAllPostsByUserId(Long userId){
@@ -51,7 +62,7 @@ public class PostService {
                     new UserNotFoundException("해당 유저가 존재하지 않습니다")
             );
         List<Post> postList = postRepository.selectByUserId(userId).stream()
-                .map(postEntity -> postMapper.toPost(postEntity))
+                .map(PostEntity::toDomain)
                 .collect(Collectors.toList());
 
         return postList;
@@ -64,7 +75,7 @@ public class PostService {
 
         existPost.changePost(updatePostCommand.getTitle(), updatePostCommand.getContent());
 
-        return Post.from(postRepository.update(existPost));
+        return existPost.toDomain();
     }
 
     public void removePost(Long id){
