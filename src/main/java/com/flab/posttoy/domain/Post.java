@@ -1,6 +1,5 @@
 package com.flab.posttoy.domain;
 
-import com.flab.posttoy.repository.post.PostEntity;
 import lombok.Builder;
 import lombok.Getter;
 
