@@ -1,5 +1,4 @@
 package com.flab.posttoy.domain;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
