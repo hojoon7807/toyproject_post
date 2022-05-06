@@ -6,6 +6,7 @@ import com.flab.posttoy.exception.comment.CommentNotFoundException;
 import com.flab.posttoy.exception.post.PostNotFoundException;
 import com.flab.posttoy.domain.port.CommentRepository;
 import com.flab.posttoy.domain.port.PostRepository;
+import com.flab.posttoy.exception.user.UserNotFoundException;
 import com.flab.posttoy.repository.comment.CommentEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -51,7 +52,7 @@ public class CommentService{
 
     private CommentEntity validateExistComment(Long id) {
         return commentRepository.selectById(id).orElseThrow(() ->
-                new CommentNotFoundException(id + ": 해당하는 댓글이 존재하지 않습니다."));
+                new CommentNotFoundException(id + ":해당하는 댓글이 존재하지 않습니다"));
     }
 
     private void validateExistPost(Long postId) {
@@ -61,6 +62,6 @@ public class CommentService{
 
     private void validateExistUser(Long userId) {
         userRepository.selectById(userId).orElseThrow(()->
-                new PostNotFoundException(userId + ":해당하는 유저가 존재하지 않습니다"));
+                new UserNotFoundException(userId + ":해당하는 유저가 존재하지 않습니다"));
     }
 }
