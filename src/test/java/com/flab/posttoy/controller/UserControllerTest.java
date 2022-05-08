@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.nio.charset.StandardCharsets;
 
@@ -43,7 +44,7 @@ public class UserControllerTest {
 
     @BeforeEach
     void init(){
-        mockMvc = MockMvcBuilders.standaloneSetup(userController).setControllerAdvice(new GlobalExceptionHandler()).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).addFilter(new CharacterEncodingFilter("UTF-8", true)).setControllerAdvice(new GlobalExceptionHandler()).build();
     }
 
     @Test
@@ -78,8 +79,7 @@ public class UserControllerTest {
                                 .content(objectMapper.writeValueAsString(invalidCreateUserRequest)))
                 .andExpect(status().isBadRequest())
                 .andExpect(result -> assertThat(result.getResolvedException()).isInstanceOf(MethodArgumentNotValidException.class))
-                .andExpect(result -> assertThat(result.getResponse().getContentAsString(StandardCharsets.UTF_8)).contains("username"))
-                .andExpect(result -> assertThat(result.getResponse().getContentAsString(StandardCharsets.UTF_8)).doesNotContain("password"));
+                .andExpect(result -> assertThat(result.getResponse().getContentAsString().contains("username")));
     }
 
     @Test
@@ -93,7 +93,6 @@ public class UserControllerTest {
                                 .content(objectMapper.writeValueAsString(invalidCreateUserRequest)))
                 .andExpect(status().isBadRequest())
                 .andExpect(result -> assertThat(result.getResolvedException()).isInstanceOf(MethodArgumentNotValidException.class))
-                .andExpect(result -> assertThat(result.getResponse().getContentAsString(StandardCharsets.UTF_8)).contains("password"))
-                .andExpect(result -> assertThat(result.getResponse().getContentAsString(StandardCharsets.UTF_8)).doesNotContain("username"));
+                .andExpect(result -> assertThat(result.getResponse().getContentAsString().contains("password")));
     }
 }

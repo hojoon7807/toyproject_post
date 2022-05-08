@@ -35,6 +35,6 @@ public class CommentController {
     @DeleteMapping("/posts/{postId}/comments/{commentId}")
     public ResponseEntity<String> commentRemove(@PathVariable Long commentId) {
         commentService.removeComment(commentId);
-        return new ResponseEntity<>("댓글이 삭제되었습니다.", HttpStatus.OK);
+        return ResponseEntity.ok().header("Content-Type", "application/json;charset=UTF-8").body("댓글이 삭제되었습니다.");
     }
 }
