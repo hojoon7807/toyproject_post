@@ -3,6 +3,8 @@ package com.flab.posttoy.web.controller;
 import com.flab.posttoy.domain.Comment;
 import com.flab.posttoy.service.CommentService;
 import com.flab.posttoy.web.dto.request.CreateCommentRequest;
+import com.flab.posttoy.web.dto.request.SimpleMessageResponse;
+import com.flab.posttoy.web.dto.request.SimpleMessageResponse;
 import com.flab.posttoy.web.dto.request.UpdateCommentRequest;
 import com.flab.posttoy.web.dto.response.CommentResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +35,8 @@ public class CommentController {
     }
 
     @DeleteMapping("/posts/{postId}/comments/{commentId}")
-    public ResponseEntity<String> commentRemove(@PathVariable Long commentId) {
+    public ResponseEntity<SimpleMessageResponse> commentRemove(@PathVariable Long commentId) {
         commentService.removeComment(commentId);
-        return ResponseEntity.ok().header("Content-Type", "application/json;charset=UTF-8").body("댓글이 삭제되었습니다.");
+        return new ResponseEntity<>(new SimpleMessageResponse(HttpStatus.OK.value(), commentId+": 댓글이 삭제되었습니다."),HttpStatus.OK);
     }
 }
