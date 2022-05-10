@@ -28,6 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -48,10 +49,12 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("회원 가입 성공")
-    void userSave() throws Exception {
-        CreateUserRequest createUserRequest = new CreateUserRequest("user1", "1234");
-        User user1 = new User(1L, "user1", "1234");
+    @DisplayName("application/json 타입의 회원가입 요청을 정상적으로 처리하고 가입 유저를 반환한다. ")
+    void userSaveJsonRequest() throws Exception {
+        final String USERNAME = "user1";
+        final String PASSWORD = "1234";
+        CreateUserRequest createUserRequest = new CreateUserRequest(USERNAME, PASSWORD);
+        User user1 = new User(1L, USERNAME, PASSWORD);
         UserResponseDTO userResponse = UserResponseDTO.from(user1);
         when(userService.addUser(any(CreateUserCommand.class))).thenReturn(user1);
 
@@ -64,6 +67,32 @@ public class UserControllerTest {
         resultActions.andExpect(status().isCreated())
                 .andExpect(jsonPath("id",userResponse.getId()).exists())
                 .andExpect(jsonPath("username", userResponse.getUsername()).exists());
+
+        verify(userService, times(1)).addUser(any(CreateUserCommand.class));
+    }
+
+    @Test
+    @DisplayName("application/x-www-form-urlencoded 타입의 회원가입 요청을 정상적으로 처리하고 가입 유저를 반환한다. ")
+    void userSaveFormRequest() throws Exception {
+        final String USERNAME = "user1";
+        final String PASSWORD = "1234";
+        CreateUserRequest createUserRequest = new CreateUserRequest(USERNAME, PASSWORD);
+
+        User user1 = new User(1L, USERNAME, PASSWORD);
+        when(userService.addUser(any(CreateUserCommand.class))).thenReturn(user1);
+
+        ResultActions resultActions = mockMvc.perform(
+                post("/users")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("username",USERNAME)
+                        .param("password",PASSWORD)
+        );
+
+        resultActions
+                .andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(user1.getId()))
+                .andExpect(jsonPath("$.username").value(user1.getUsername()));
 
         verify(userService, times(1)).addUser(any(CreateUserCommand.class));
     }

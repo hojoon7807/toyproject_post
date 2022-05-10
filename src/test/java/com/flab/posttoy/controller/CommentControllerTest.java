@@ -107,7 +107,7 @@ public class CommentControllerTest {
                 .content(objectMapper.writeValueAsString(createCommentRequest))
         );
 
-        resultActions.andExpect(status().isBadRequest())
+        resultActions.andExpect(status().isNotFound())
                 .andExpect(result -> assertThat(result.getResolvedException()).isInstanceOf(UserNotFoundException.class))
                 .andExpect(jsonPath("$.status").value(404))
                 .andExpect(jsonPath("$.message").value(USER_ID + ":해당하는 유저가 존재하지 않습니다"))
@@ -135,7 +135,8 @@ public class CommentControllerTest {
         final Long ID = 1L;
         mockMvc.perform(delete("/posts/1/comments/{commentId}", ID))
                 .andExpect(status().isOk())
-                .andExpect((result)->assertThat(result.getResponse().getContentAsString()).isEqualTo("댓글이 삭제되었습니다."));
+                .andExpect(jsonPath("$.status").value(200))
+                .andExpect(jsonPath("$.message").value(ID+": 댓글이 삭제되었습니다."));
 
         verify(commentService,times(1)).removeComment(ID);
     }
