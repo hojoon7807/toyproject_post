@@ -13,7 +13,4 @@ public interface CommentRepository {
     Optional<CommentEntity> selectById(Long id);
     List<CommentEntity> selectByPostId(Long postId);
     List<CommentEntity> selectAll();
-
-    void clearStore();
-
 }

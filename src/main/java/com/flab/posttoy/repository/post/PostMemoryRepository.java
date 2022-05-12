@@ -51,8 +51,4 @@ public class PostMemoryRepository implements PostRepository {
         return new ArrayList<>(store.values());
     }
 
-    @Override
-    public void clearStore() {
-
-    }
 }
