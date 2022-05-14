@@ -8,6 +8,7 @@ import com.flab.posttoy.domain.port.CommentRepository;
 import com.flab.posttoy.domain.port.PostRepository;
 import com.flab.posttoy.exception.user.UserNotFoundException;
 import com.flab.posttoy.repository.comment.CommentEntity;
+import com.flab.posttoy.repository.user.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class CommentService{
 
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
+    private final UserRepository<UserEntity, Long> userRepository;
 
     public Comment addComment(CreateCommentCommand createCommentCommand) {
         validateExistPost(createCommentCommand.getPostId());

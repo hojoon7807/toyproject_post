@@ -9,6 +9,7 @@ import com.flab.posttoy.domain.port.CommentRepository;
 import com.flab.posttoy.domain.port.PostRepository;
 import com.flab.posttoy.domain.port.UserRepository;
 import com.flab.posttoy.repository.post.PostEntity;
+import com.flab.posttoy.repository.user.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
+    private final UserRepository<UserEntity, Long> userRepository;
     private final CommentRepository commentRepository;
 
     public Post addPost(CreatePostCommand createPostCommand) {
