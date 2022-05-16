@@ -37,7 +37,7 @@ public class UserServiceTest {
         Long fakeId = 1L;
         ReflectionTestUtils.setField(userEntity, "id", fakeId);
         when(userRepository.insert(any())).thenReturn(userEntity);
-        when(userRepository.selectByName(any())).thenReturn(Optional.empty());
+        when(userRepository.selectByUsername(any())).thenReturn(Optional.empty());
 
         User user = userService.addUser(createUserCommand);
 
@@ -49,7 +49,7 @@ public class UserServiceTest {
         );
 
         verify(userRepository, times(1)).insert(any(UserEntity.class));
-        verify(userRepository, times(1)).selectByName(any(String.class));
+        verify(userRepository, times(1)).selectByUsername(any(String.class));
     }
 
     @Test
@@ -57,13 +57,13 @@ public class UserServiceTest {
     void addUser_duplicatedUser(){
         CreateUserCommand createUserCommand = new CreateUserCommand("user1", "1234");
         UserEntity userEntity = createUserCommand.toEntity();
-        when(userRepository.selectByName(any())).thenReturn(Optional.of(userEntity));
+        when(userRepository.selectByUsername(any())).thenReturn(Optional.of(userEntity));
 
         assertThatThrownBy(() -> userService.addUser(createUserCommand))
                 .isInstanceOf(DuplicatedUserException.class)
                 .hasMessage("회원이 이미 존재합니다");
 
         verify(userRepository, times(0)).insert(any(UserEntity.class));
-        verify(userRepository, times(1)).selectByName(any(String.class));
+        verify(userRepository, times(1)).selectByUsername(any(String.class));
     }
 }

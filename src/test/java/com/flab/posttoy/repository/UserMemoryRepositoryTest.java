@@ -14,12 +14,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class UserMemoryRepositoryTest {
-    private final UserRepository userRepository = new UserMemoryRepository();
+    private UserRepository<UserEntity, Long> userRepository;
 
     @AfterEach
-    void afterEach(){
-        userRepository.clearStore();
+    void beforeEach(){
+        userRepository = new UserMemoryRepository();
     }
+
 
     @Test
     @DisplayName("회원 추가")
@@ -78,8 +79,8 @@ public class UserMemoryRepositoryTest {
 
         userRepository.insert(user1);
 
-        Optional<UserEntity> selectedUser1 = userRepository.selectByName("member1");
-        Optional<UserEntity> selectedUser2 = userRepository.selectByName("member2");
+        Optional<UserEntity> selectedUser1 = userRepository.selectByUsername("member1");
+        Optional<UserEntity> selectedUser2 = userRepository.selectByUsername("member2");
 
         assertAll(
                 () -> assertThat(selectedUser1).isNotEmpty().hasValueSatisfying(userEntity ->
