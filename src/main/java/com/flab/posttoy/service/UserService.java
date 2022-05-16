@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserService{
-    private final UserRepository userRepository;
+    private final UserRepository<UserEntity,Long> userRepository;
 
     public User addUser(CreateUserCommand createUserCommand) {
         validateDuplicatedUser(createUserCommand.getUsername());
@@ -20,7 +20,7 @@ public class UserService{
     }
 
     private void validateDuplicatedUser(String username) {
-        userRepository.selectByName(username).ifPresent(u -> {
+        userRepository.selectByUsername(username).ifPresent(u -> {
                 throw new DuplicatedUserException("회원이 이미 존재합니다");
         });
     }

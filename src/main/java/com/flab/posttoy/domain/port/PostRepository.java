@@ -14,7 +14,4 @@ public interface PostRepository {
     Optional<PostEntity> selectById(Long id);
     List<PostEntity> selectByUserId(Long userId);
     List<PostEntity> selectAll();
-
-    void clearStore();
-
 }

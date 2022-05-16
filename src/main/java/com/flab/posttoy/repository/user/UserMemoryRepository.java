@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
-public class UserMemoryRepository implements UserRepository {
+public class UserMemoryRepository implements UserRepository<UserEntity,Long> {
     private final ConcurrentHashMap<Long, UserEntity> store = new ConcurrentHashMap();
     private AtomicLong sequence = new AtomicLong();
 
@@ -27,7 +27,7 @@ public class UserMemoryRepository implements UserRepository {
     }
 
     @Override
-    public Optional<UserEntity> selectByName(String username) {
+    public Optional<UserEntity> selectByUsername(String username) {
         return store.values().stream()
                 .filter(user -> user.getUsername().equals(username))
                 .findFirst();
@@ -41,10 +41,5 @@ public class UserMemoryRepository implements UserRepository {
     @Override
     public void delete(Long id) {
         store.remove(id);
-    }
-
-    @Override
-    public void clearStore() {
-        store.clear();
     }
 }

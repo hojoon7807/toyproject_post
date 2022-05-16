@@ -51,9 +51,4 @@ public class CommentMemoryRepository implements CommentRepository {
     public List<CommentEntity> selectAll() {
         return new ArrayList<>(store.values());
     }
-
-    @Override
-    public void clearStore() {
-        store.clear();
-    }
 }
