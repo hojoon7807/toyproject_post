@@ -1,18 +1,13 @@
 package com.flab.posttoy.domain.port;
 
-import com.flab.posttoy.repository.user.UserEntity;
-import com.flab.posttoy.repository.user.UserMemoryRepository;
-
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository {
-    UserEntity insert(UserEntity user);
-    void delete(Long id);
-    Optional<UserEntity> selectById(Long id);
-    Optional<UserEntity> selectByName(String username);
-    List<UserEntity> selectAll();
-
-    void clearStore();
-
+public interface UserRepository <T,ID extends Serializable>{
+    T insert(T t);
+    void delete(ID id);
+    Optional<T> selectById(ID id);
+    Optional<T> selectByUsername(String username);
+    List<T> selectAll();
 }
